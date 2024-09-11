@@ -1,0 +1,54 @@
+ if(Session::has('user_id')) 
+        {
+        //     $cin = new tbl_cart([
+        //         'p_id' => $request->get('pid'),
+        //         'qty' => $request->get('qty'),
+        //         'user_id' => Session::get('user_id'),
+        //     ]);
+        //     $cin->save();
+        //     return redirect('userside/cart')->with('success', 'Your Item Added In Cart');
+        // } 
+        // else 
+        // {
+        //     // User is not logged in, redirect to signup page
+        //     return redirect('signup')->with('error', 'Please login to add items to cart');
+        // }
+
+
+
+          $cin = new tbl_cart([
+            'p_id' => $request->get('p_id'),
+            'qty' => $request->get('qty'),
+            'user_id' => Session::get('user_id'),
+        ]);
+        $cin->save();
+        // Fetch product data from database
+        $productData=DB::table('products')->where('p_id', $request->get('p_id'))->first();
+        // Store cart data in session
+        $cartData = [];
+        $cartData[$request->get('p_id')] = 
+        [
+            'p_name' => $productData->p_name,
+            'p_price' => $productData->p_price,
+            'img' => $productData->img,
+            'qtty' => $request->get('qty'),
+        ];
+    
+        if(Session::has('cart')) 
+        {
+            $existingCart = Session::get('cart');
+            $existingCart = array_merge($existingCart,$cartData);
+            Session::put('cart', $existingCart);
+        } 
+        else 
+        {
+            Session::put('cart', $cartData);
+        }
+    
+        return redirect('userside/cart')->with('success', 'Your Item Added In Cart');
+    } 
+    else 
+    {
+        // User is not logged in, redirect to signup page
+        return redirect('signup')->with('error', 'Please login to add items to cart');
+    }

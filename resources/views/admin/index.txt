@@ -1,0 +1,33 @@
+<table border="1">
+    @if (session()->get('success'))
+    {{session()->get('success')}}
+    @endif
+    <tr>
+       <th>ID</th>
+       <th>Name</th>
+       <th>Email</th>
+       <th>Password</th>
+       <th>Created_At</th>
+       <th>Update_At</th>
+       <th>Action</th>
+    </tr>
+    @foreach ($data as $adata )
+    <tr>
+        <td>{{$adata->id}}</td>
+        <td>{{$adata->name}}</td>
+        <td>{{$adata->email	}}</td>
+        <td>{{$adata->password}}</td>
+        <td>{{$adata->created_at}}</td>
+        <td>{{$adata->updated_at}}</td>
+        <td>
+            <a href="{{route('admins.edit',$adata->id)}}">Edit</a>
+            <a href="{{route('admins.show',$adata->id)}}">Show</a>
+            <form action="{{route('admins.destroy',$adata->id)}}" method="post">
+                @method('DELETE')
+                @csrf
+                <input type="submit" value="DELETE">
+            </form>
+        </td>
+    </tr>
+    @endforeach
+</table>

@@ -1,0 +1,24 @@
+{
+cart id
+product id
+quantity
+price 
+user id
+order master
+ordermaster id
+user id
+orderdate 
+shipping name
+shipping address
+shipping mobile no
+}
+Amdin DashBord
+{{Order-Details Table}}
+{{Product Form}}
+{{Form}}
+[{{Catr table}}]
+Category Form
+Category Table
+Address Table
+Payment Table
+FeedBack Table
